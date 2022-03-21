@@ -21,50 +21,62 @@ cam_5 = pygame.image.load("backdrops/cams/cam_5.png")
 cam_6 = pygame.image.load("backdrops/cams/cam_6.png")
 cam_7 = pygame.image.load("backdrops/cams/cam_7.png")
 
+crshair = pygame.image.load("sprites/crosshair.png")
+crshair_canuse = pygame.image.load("sprites/crosshair_canuse.png")
+crshair_using = pygame.image.load("sprites/crosshair_using.png")
+
+progbar = pygame.image.load("sprites/progressbar.png")
+greenbar = pygame.image.load("sprites/greenbar.png")
+
 screen.blit(testbkgrnd, (-500, 0))
 pygame.display.flip()
 
 view = 0
 move = 0
 cam = 0
+tooluse = False
+plane = 0
 inv = False
 
 def vision():
     global view
     screen.blit(testbkgrnd, ((-500 - (view * 10)), 0))
-    pygame.display.flip()
+
+def crosshair():
+    screen.blit(crshair, (650, 350))
+
+def progress_bar():
+    screen.blit(progbar, (0, 460))
+    
+def green_bar():
+    global view
+    screen.blit(greenbar, ((-490 + (plane * 4.91)), 460))
     
 def cams():
     global cam
     if cam == 0:
         screen.blit(cam_0, (100, 100))
-        pygame.display.flip()
     if cam == 1:
         screen.blit(cam_1, (100, 100))
-        pygame.display.flip()
     if cam == 2:
         screen.blit(cam_2, (100, 100))
-        pygame.display.flip()
     if cam == 3:
         screen.blit(cam_3, (100, 100))
-        pygame.display.flip()
     if cam == 4:
         screen.blit(cam_4, (100, 100))
-        pygame.display.flip()
     if cam == 5:
         screen.blit(cam_5, (100, 100))
-        pygame.display.flip()
     if cam == 6:
         screen.blit(cam_6, (100, 100))
-        pygame.display.flip()
     if cam == 7:
         screen.blit(cam_7, (100, 100))
-        pygame.display.flip()
 
 def main():
     global inv
     global move
     global view
+    global tooluse
+    global plane
     
     # Event loop
         
@@ -72,9 +84,14 @@ def main():
         global cam
         if inv == True:
             cams()
+            pygame.display.flip()
             
         if inv == False:
             vision()
+            green_bar()
+            progress_bar()
+            crosshair()
+            pygame.display.flip()
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -82,6 +99,7 @@ def main():
                 
             if event.type == pygame.KEYUP:
                 move = 0
+                tooluse = False
                    
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -110,10 +128,12 @@ def main():
                 if event.key == pygame.K_DOWN:
                     if inv == True:
                         inv = False
+                    if inv == False:
+                        view = 0
                     
                 if event.key == pygame.K_SPACE:
-                    # Light or other function?
-                    pass
+                    if view < 10 and view > -5:
+                        tooluse = True
                 
         """Code for num resets"""
         if move == 1:
@@ -132,4 +152,11 @@ def main():
             cam = 0
         if cam == -1:
             cam = 7
+        
+        if tooluse == True:
+            plane += .25
+        if plane == 100:
+            print("you win")
+            pygame.quit()
+            quit()
 main()
