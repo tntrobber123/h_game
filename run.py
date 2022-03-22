@@ -25,8 +25,10 @@ cam_6 = pygame.image.load("backdrops/cams/cam_6.png")
 cam_7 = pygame.image.load("backdrops/cams/cam_7.png")
 
 crshair = pygame.image.load("sprites/crosshair.png")
-crshair_canuse = pygame.image.load("sprites/crosshair_canuse.png")
 crshair_using = pygame.image.load("sprites/crosshair_using.png")
+planefix = pygame.image.load("sprites/fixplane.png")
+foodimg = pygame.image.load("sprites/food.png")
+soundimg = pygame.image.load("sprites/sound.png")
 
 food = False
 
@@ -41,7 +43,11 @@ pygame.display.flip()
 view = 0
 move = 0
 cam = 0
+
 tooluse = False
+foodlure = False
+soundlure = False
+
 plane = 0
 inv = False
 
@@ -50,9 +56,13 @@ w_dif = 1
 def vision():
     global view
     screen.blit(testbkgrnd, ((-500 - (view * 10)), 0))
+    
+    screen.blit(foodimg, ((300 - (view * 10)), 500))
+    screen.blit(planefix, ((600 - (view * 10)), 500))
+    screen.blit(soundimg, ((900 - (view * 10)), 500))
 
 def crosshair():
-    screen.blit(crshair, (650, 350))
+    screen.blit(crshair, (650, 500))
 
 def progress_bar():
     screen.blit(progbar, (0, 460))
@@ -118,9 +128,7 @@ def main():
     # Event loop
         
     while True:
-        print (wlf.timer)
-        print (wlf.counter)
-        print (wlf.need)
+        
         """AI loop:"""
         
         wlf.timer += 1
@@ -180,8 +188,17 @@ def main():
                         view = 0
                     
                 if event.key == pygame.K_SPACE:
-                    if view < 10 and view > -5:
+                    
+                    if view < 10 and view > -10:
                         tooluse = True
+                        
+                    if view < -20 and view > -40:
+                        foodlure = True
+                        print("foodlure")
+                        
+                    if view < 40 and view > 20:
+                        soundlure = True
+                        print("soundlure")
                 
         """Code for num resets"""
         if move == 1:
