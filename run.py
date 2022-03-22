@@ -3,6 +3,9 @@ import time
 import random
 import math
 
+from wolf import Wolf
+wlf = Wolf()
+
 black = (0, 0, 0)
 white = (255, 255, 255)
 size = [1400, 1000]
@@ -25,8 +28,12 @@ crshair = pygame.image.load("sprites/crosshair.png")
 crshair_canuse = pygame.image.load("sprites/crosshair_canuse.png")
 crshair_using = pygame.image.load("sprites/crosshair_using.png")
 
+food = False
+
 progbar = pygame.image.load("sprites/progressbar.png")
 greenbar = pygame.image.load("sprites/greenbar.png")
+
+wlf_img = pygame.image.load("sprites/chars/wlf.png")
 
 screen.blit(testbkgrnd, (-500, 0))
 pygame.display.flip()
@@ -37,6 +44,8 @@ cam = 0
 tooluse = False
 plane = 0
 inv = False
+
+w_dif = 1
 
 def vision():
     global view
@@ -50,27 +59,55 @@ def progress_bar():
     
 def green_bar():
     global view
-    screen.blit(greenbar, ((-490 + (plane * 4.91)), 460))
+    screen.blit(greenbar, ((-490 + (plane * 5)), 460))
     
 def cams():
     global cam
     if cam == 0:
-        screen.blit(cam_0, (100, 100))
+        screen.blit(cam_0, (85, 120))
+        if wlf.loc == 0:
+            screen.blit(wlf_img, (85, 120))
     if cam == 1:
-        screen.blit(cam_1, (100, 100))
+        screen.blit(cam_1, (85, 120))
+        if wlf.loc == 1:
+            screen.blit(wlf_img, (85, 120))
     if cam == 2:
-        screen.blit(cam_2, (100, 100))
+        screen.blit(cam_2, (85, 120))
+        if wlf.loc == 2:
+            screen.blit(wlf_img, (85, 120))
     if cam == 3:
-        screen.blit(cam_3, (100, 100))
+        screen.blit(cam_3, (85, 120))
+        if wlf.loc == 3:
+            screen.blit(wlf_img, (85, 120))
     if cam == 4:
-        screen.blit(cam_4, (100, 100))
+        screen.blit(cam_4, (85, 120))
+        if wlf.loc == 4:
+            screen.blit(wlf_img, (85, 120))
     if cam == 5:
-        screen.blit(cam_5, (100, 100))
+        screen.blit(cam_5, (85, 120))
+        if wlf.loc == 5:
+            screen.blit(wlf_img, (85, 120))
     if cam == 6:
-        screen.blit(cam_6, (100, 100))
+        screen.blit(cam_6, (85, 120))
+        if wlf.loc == 6:
+            screen.blit(wlf_img, (85, 120))
     if cam == 7:
-        screen.blit(cam_7, (100, 100))
+        screen.blit(cam_7, (85, 120))
+        if wlf.loc == 7:
+            screen.blit(wlf_img, (85, 120))
 
+def wlf_move(): 
+    global wlf
+    if food == False:
+        if wlf.counter == wlf.need:
+            # Jumpscare
+            wlf.need = random.randint(3, 10)
+            pass
+        else:
+            wlf.counter += 1
+            wlf.loc = random.randint(0, 7)
+            
+    
 def main():
     global inv
     global move
@@ -81,6 +118,17 @@ def main():
     # Event loop
         
     while True:
+        print (wlf.timer)
+        print (wlf.counter)
+        print (wlf.need)
+        """AI loop:"""
+        
+        wlf.timer += 1
+        if wlf.timer == (500 / w_dif):
+            wlf_move()
+            wlf.timer = 0
+            
+        
         global cam
         if inv == True:
             cams()
@@ -148,14 +196,15 @@ def main():
             elif view <= -50:
                 view = -50
                 
+        # Cam range = 0-7
         if cam == 8:
             cam = 0
         if cam == -1:
             cam = 7
         
         if tooluse == True:
-            plane += .25
-        if plane == 100:
+            plane += .2
+        if plane >= 100:
             print("you win")
             pygame.quit()
             quit()
