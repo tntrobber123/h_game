@@ -6,6 +6,9 @@ import math
 from wolf import Wolf
 wlf = Wolf()
 
+from crocodile import Crocodile
+croc = Crocodile()
+
 black = (0, 0, 0)
 white = (255, 255, 255)
 size = [1400, 1000]
@@ -36,6 +39,7 @@ progbar = pygame.image.load("sprites/progressbar.png")
 greenbar = pygame.image.load("sprites/greenbar.png")
 
 wlf_img = pygame.image.load("sprites/chars/wlf.png")
+croc_img = pygame.image.load("sprites/chars/croc.png")
 
 screen.blit(testbkgrnd, (-500, 0))
 pygame.display.flip()
@@ -70,42 +74,67 @@ def progress_bar():
 def green_bar():
     global view
     screen.blit(greenbar, ((-490 + (plane * 5)), 460))
-    
+
 def cams():
     global cam
     if cam == 0:
         screen.blit(cam_0, (85, 120))
         if wlf.loc == 0:
             screen.blit(wlf_img, (85, 120))
+        if croc.loc == 0:
+            screen.blit(croc_img, (185, 120))
+            
+
+
     if cam == 1:
         screen.blit(cam_1, (85, 120))
         if wlf.loc == 1:
             screen.blit(wlf_img, (85, 120))
+        if croc.loc == 1:
+            screen.blit(croc_img, (185, 120))
+        
     if cam == 2:
         screen.blit(cam_2, (85, 120))
         if wlf.loc == 2:
             screen.blit(wlf_img, (85, 120))
+        if croc.loc == 2:
+            screen.blit(croc_img, (185, 120))
+        
     if cam == 3:
         screen.blit(cam_3, (85, 120))
         if wlf.loc == 3:
             screen.blit(wlf_img, (85, 120))
+        if croc.loc == 3:
+            screen.blit(croc_img, (185, 120))
+        
     if cam == 4:
         screen.blit(cam_4, (85, 120))
         if wlf.loc == 4:
             screen.blit(wlf_img, (85, 120))
+        if croc.loc == 4:
+            screen.blit(croc_img, (185, 120))
+        
     if cam == 5:
         screen.blit(cam_5, (85, 120))
         if wlf.loc == 5:
             screen.blit(wlf_img, (85, 120))
+        if croc.loc == 5:
+            screen.blit(croc_img, (185, 120))
+        
     if cam == 6:
-        screen.blit(cam_6, (85, 120))
+        screen.blit(cam_1, (85, 120))
         if wlf.loc == 6:
             screen.blit(wlf_img, (85, 120))
+        if croc.loc == 6:
+            screen.blit(croc_img, (185, 120))
+        
     if cam == 7:
         screen.blit(cam_7, (85, 120))
         if wlf.loc == 7:
             screen.blit(wlf_img, (85, 120))
-
+        if croc.loc == 7:
+            screen.blit(croc_img, (185, 120))
+        
 def wlf_move(): 
     global wlf
     if food == False:
