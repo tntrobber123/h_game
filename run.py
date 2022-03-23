@@ -80,8 +80,9 @@ c_disable = False
 g_disable = False
 
 def vision():
-    global view
     screen.blit(testbkgrnd, ((-500 - (view * 10)), 0))
+    if g_disable == True:
+        screen.blit(gst_img, ((-500 - (view * 10)), 0))
     screen.blit(foodimg, ((300 - (view * 10)), 500))
     screen.blit(planefix, ((600 - (view * 10)), 500))
     screen.blit(soundimg, ((900 - (view * 10)), 500))
@@ -189,11 +190,12 @@ def croc_move():
             
 def gst_move():
     global inv
+    global g_disable
     if gst.counter == gst.need:
         inv = False
-        screen.blit(gst_img, ((0 - (view * 10)), 0))
         gst.loc = 10
         g_disable = True
+        print("ghost disable", g_disable)
         # Timer
         # Jumpscare
     else:
@@ -351,26 +353,21 @@ def main():
             screen.blit(minisound, (0, 590))
             
         """AI loop:"""
-        if w_disable == False:
+        if not w_disable:
             wlf.timer += 1
+            if wlf.timer == (500 // w_dif):
+                wlf_move()
+                wlf.timer = 0
             
-        if c_disable == False:
+        if not c_disable:
             croc.timer += 1
+            if croc.timer == (800 // c_dif):
+                croc_move()
+                croc.timer = 0
         
-        if g_disable == False:
+        if not g_disable:
             gst.timer += 1
-            
-        
-        if wlf.timer == (500 / w_dif):
-            wlf_move()
-            wlf.timer = 0
-        
-        if croc.timer == (800 / c_dif):
-            croc_move()
-            croc.timer = 0
-        
-        if g_disable == False:
-            if gst.timer == (100 / g_dif):
+            if gst.timer == (100 // g_dif):
                 gst_move()
                 gst.timer = 0
             
