@@ -195,7 +195,6 @@ def gst_move():
         inv = False
         gst.loc = 10
         g_disable = True
-        print("ghost disable", g_disable)
         # Timer
         # Jumpscare
     else:
@@ -226,7 +225,6 @@ def main():
             
         if inv == True:
             cams()
-            pygame.display.flip()
             
         if inv == False:
             vision()
@@ -240,6 +238,8 @@ def main():
             if event.type == pygame.KEYUP:
                 move = 0
                 tooluse = False
+                foodlure = False
+                soundlure = False
                    
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -263,7 +263,6 @@ def main():
                     if inv == False:
                         inv = True
                         screen.blit(inv_img, (0, 0))
-                        pygame.display.flip()
                         
                 if event.key == pygame.K_DOWN:
                     if inv == True:
@@ -294,6 +293,12 @@ def main():
                             soundlure = True
                 
         """Code for num resets"""
+        if not foodlure:
+            foodcount = 0
+            
+        if not soundlure:
+            soundcount = 0
+        
         if move == 1:
             if view < 50:
                 view += 2
@@ -315,44 +320,34 @@ def main():
         if tooluse == True:
             plane += .2
         if plane >= 100:
-            print("you win")
+            # Advance the level
             pygame.quit()
             quit()
             
         if foodlure == True:
             foodcount += 1
+            
         if foodcount >= 50:
-            if has_sound == False:
-                has_food = True
-                foodcount = 0
-            else:
-                has_sound = False
-                has_food = True
-                foodcount = 0
+            has_food = True
+            has_sound = False
+            foodcount = 0
         
         if soundlure == True:
             soundcount += 1
+            
         if soundcount >= 50:
-            if has_food == False:
-                has_sound = True
-                soundcount = 0
-            else:
-                has_food = False
-                has_sound = True
-                soundcount = 0
+            has_sound = True
+            has_food = False
+            soundcount = 0
         
         if has_food == True:
-            has_sound = False
             screen.blit(minifood, (0, 590))
-            
-        if has_food == False:
-            pass
-            
+             
         if has_sound == True:
-            has_food = False
             screen.blit(minisound, (0, 590))
             
         """AI loop:"""
+        
         if not w_disable:
             wlf.timer += 1
             if wlf.timer == (500 // w_dif):
