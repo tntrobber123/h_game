@@ -2,8 +2,6 @@ import pygame
 import time
 import random
 import math
-import pickle
-import os.path
 
 from wolf import Wolf
 wlf = Wolf()
@@ -18,9 +16,6 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 size = [1400, 1000]
 screen = pygame.display.set_mode(size)
-
-file_exists =  os.path.exists("/saveinfo/info.py")
-outfile = open("saveinfo/info.py", "wb")
 
 # Sprites and Backgrounds
 testbkgrnd = pygame.image.load("backdrops/test_background.png")
@@ -82,9 +77,14 @@ w_dif = 1
 c_dif = 1
 g_dif = 1
 
+gjs = False
+
 w_disable = False
+wlf_countdown = -1
 c_disable = False
+croc_countdown = -1
 g_disable = False
+gst_countdown = -1
 
 def vision():
     screen.blit(testbkgrnd, ((-500 - (view * 10)), 0))
@@ -198,21 +198,34 @@ def croc_move():
 def gst_move():
     global inv
     global g_disable
+    global gst_countdown
+    
     if gst.counter == gst.need:
         inv = False
         gst.loc = 10
         g_disable = True
-        # Timer
-        # Jumpscare
+        # This puts him in the state where he's off to the side but will JS you in like 5 seconds or so. This \/ is the countdown timer.
+        gst_countdown = 100
+        gst.need = 99
     else:
         gst.counter += 1
         gst.loc = random.randint(0, 7)
-            
-# File check, load after
-if file_exists == False:
-    pickle.dump(night, outfile)
-    outfile.close()
+
+def g_js():
+    global plane
+    global foodlure
+    global soundlure
     
+    plane -= 10
+    foodlure = False
+    soundlure = False
+    for item in gst.ghostjs:
+        chosenimg = pygame.image.load(img)
+        newimg = pygame.transform.scale(chosenimg, (1400, 750))
+        screen.blit(newimg, (0, 0))
+        pygame.display.flip()
+        time.sleep(.03)
+
 def main():
     global inv
     global cam
@@ -228,10 +241,19 @@ def main():
     global soundroom
     global has_food
     global has_sound
+    global gst_countdown
+    global gjs
+    global croc_countdown
+    global wlf_countdown
     
     # Event loop
         
     while True:
+            
+        if gst_countdown > 0:
+            gst_countdown -= 1
+        if gst_countdown == 0:
+            gjs = True
             
         if inv == True:
             cams()
@@ -372,11 +394,19 @@ def main():
                 croc_move()
                 croc.timer = 0
         
+        if cam == gst.loc:
+            g_disable = True
+        if cam != gst.loc:
+            g_disable = False
+            
         if not g_disable:
             gst.timer += 1
-            if gst.timer >= (250 // g_dif):
+            if gst.timer >= (10 // g_dif):
                 gst_move()
                 gst.timer = 0
+                
+        if gjs == True:
+            g_js()
             
         pygame.display.flip()
 main()
