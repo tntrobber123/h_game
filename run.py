@@ -2,6 +2,8 @@ import pygame
 import time
 import random
 import math
+import pickle
+import os.path
 
 from wolf import Wolf
 wlf = Wolf()
@@ -16,6 +18,9 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 size = [1400, 1000]
 screen = pygame.display.set_mode(size)
+
+file_exists =  os.path.exists("/saveinfo/info.py")
+outfile = open("saveinfo/info.py", "wb")
 
 # Sprites and Backgrounds
 testbkgrnd = pygame.image.load("backdrops/test_background.png")
@@ -70,6 +75,8 @@ soundlure = False
 
 plane = 0
 inv = False
+
+night = 1
 
 w_dif = 1
 c_dif = 1
@@ -201,7 +208,10 @@ def gst_move():
         gst.counter += 1
         gst.loc = random.randint(0, 7)
             
-            
+# File check, load after
+if file_exists == False:
+    pickle.dump(night, outfile)
+    outfile.close()
     
 def main():
     global inv
@@ -276,10 +286,12 @@ def main():
                         if has_food == True:
                             foodroom = cam
                             has_food = False
+                            screen.blit(inv_img, (0, 0))
                             
                         if has_sound == True:
                             soundroom = cam
                             has_sound = False
+                            screen.blit(inv_img, (0, 0))
                             
                     if inv == False:
                     
@@ -350,19 +362,19 @@ def main():
         
         if not w_disable:
             wlf.timer += 1
-            if wlf.timer == (500 // w_dif):
+            if wlf.timer >= (500 // w_dif):
                 wlf_move()
                 wlf.timer = 0
             
         if not c_disable:
             croc.timer += 1
-            if croc.timer == (800 // c_dif):
+            if croc.timer >= (800 // c_dif):
                 croc_move()
                 croc.timer = 0
         
         if not g_disable:
             gst.timer += 1
-            if gst.timer == (100 // g_dif):
+            if gst.timer >= (250 // g_dif):
                 gst_move()
                 gst.timer = 0
             

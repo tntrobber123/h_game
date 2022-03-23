@@ -9,4 +9,4 @@ class Ghost(pygame.sprite.Sprite):
         self.loc = 4
         self.timer = 0
         self.counter = 0
-        self.need = 2
+        self.need = random.randint(3, 15)
