@@ -13,7 +13,7 @@ import random
 6-*field - clearing, not much there. trees in the distance
 7-*abandon mine - small clearing that leads to a hill with a mine in it
 
-8-*camp
+8-*bunker
 Viable Locations """
 class Wolf(pygame.sprite.Sprite):
     def __init__(self):
@@ -22,3 +22,4 @@ class Wolf(pygame.sprite.Sprite):
         self.timer = 0
         self.counter = 0
         self.need = random.randint(3, 10)
+        self.img = pygame.image.load("sprites/chars/croc.png")

@@ -11,6 +11,7 @@ class Ghost(pygame.sprite.Sprite):
         self.counter = 0
         self.need = random.randint(3, 15)
         self.listnum = 0
+        self.img = pygame.image.load("sprites/chars/ghost.png")
         self.ghostjs = (
 "sprites/chars/JS/0.png",
 "sprites/chars/JS/1.png",

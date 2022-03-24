@@ -10,3 +10,4 @@ class Crocodile(pygame.sprite.Sprite):
         self.timer = 0
         self.counter = 0
         self.need = random.randint(3, 15)
+        self.img = pygame.image.load("sprites/chars/wlf.png")

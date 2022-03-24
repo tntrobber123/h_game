@@ -3,6 +3,8 @@ import time
 import random
 import math
 
+x = 0
+
 from wolf import Wolf
 wlf = Wolf()
 
@@ -41,11 +43,6 @@ soundimg = pygame.image.load("sprites/sound.png")
 minisound = pygame.image.load("sprites/minisound.png")
 progbar = pygame.image.load("sprites/progressbar.png")
 greenbar = pygame.image.load("sprites/greenbar.png")
-
-# Characters
-wlf_img = pygame.image.load("sprites/chars/wlf.png")
-croc_img = pygame.image.load("sprites/chars/croc.png")
-gst_img = pygame.image.load("sprites/chars/ghost.png")
 
 food = False
 foodcount = 0
@@ -89,7 +86,7 @@ gst_countdown = -1
 def vision():
     screen.blit(testbkgrnd, ((-500 - (view * 10)), 0))
     if g_disable == True:
-        screen.blit(gst_img, ((-500 - (view * 10)), 0))
+        screen.blit(gst.img, ((-500 - (view * 10)), 0))
     screen.blit(foodimg, ((300 - (view * 10)), 500))
     screen.blit(planefix, ((600 - (view * 10)), 500))
     screen.blit(soundimg, ((900 - (view * 10)), 500))
@@ -100,7 +97,6 @@ def draw_ent():
     
 def green_bar():
     plane_int = int(plane)
-    global view
     screen.blit(greenbar, ((-490 + (plane_int * 5)), 460))
 
 def cams():
@@ -108,74 +104,74 @@ def cams():
     if cam == 0:
         screen.blit(cam_0, (85, 120))
         if wlf.loc == 0:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 0:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 0:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
             
     if cam == 1:
         screen.blit(cam_1, (85, 120))
         if wlf.loc == 1:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 1:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 1:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
         
     if cam == 2:
         screen.blit(cam_2, (85, 120))
         if wlf.loc == 2:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 2:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 2:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
         
     if cam == 3:
         screen.blit(cam_3, (85, 120))
         if wlf.loc == 3:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 3:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 3:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
         
     if cam == 4:
         screen.blit(cam_4, (85, 120))
         if wlf.loc == 4:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 4:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 4:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
         
     if cam == 5:
         screen.blit(cam_5, (85, 120))
         if wlf.loc == 5:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 5:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 5:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
         
     if cam == 6:
         screen.blit(cam_1, (85, 120))
         if wlf.loc == 6:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 6:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 6:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
         
     if cam == 7:
         screen.blit(cam_7, (85, 120))
         if wlf.loc == 7:
-            screen.blit(wlf_img, (85, 120))
+            screen.blit(wlf.img, (85, 120))
         if croc.loc == 7:
-            screen.blit(croc_img, (185, 120))
+            screen.blit(croc.img, (185, 120))
         if gst.loc == 7:
-            screen.blit(gst_img, (250, 120))
+            screen.blit(gst.img, (250, 120))
         
 def wlf_move(): 
     if food == False:
@@ -204,7 +200,7 @@ def gst_move():
         inv = False
         gst.loc = 10
         g_disable = True
-        # This puts him in the state where he's off to the side but will JS you in like 5 seconds or so. This \/ is the countdown timer.
+        # This puts him in the state where he's off to the side but will JS you in like 5 seconds or so. This       \/ is the countdown timer.
         gst_countdown = 100
         gst.need = 99
     else:
@@ -215,16 +211,20 @@ def g_js():
     global plane
     global foodlure
     global soundlure
+    global x
     
     plane -= 10
     foodlure = False
     soundlure = False
-    for item in gst.ghostjs:
-        chosenimg = pygame.image.load(img)
+
+    while x != 20:
+        chosenimg = pygame.image.load(gst.ghostjs[x])
         newimg = pygame.transform.scale(chosenimg, (1400, 750))
         screen.blit(newimg, (0, 0))
         pygame.display.flip()
         time.sleep(.03)
+        x += 1
+        
 
 def main():
     global inv
@@ -407,6 +407,11 @@ def main():
                 
         if gjs == True:
             g_js()
+            gjs = False
+            gst.countdown = -1
+            gst.need = random.randint(10, 15)
+            gst.timer = 0
+            gst.loc = 5
             
         pygame.display.flip()
 main()
