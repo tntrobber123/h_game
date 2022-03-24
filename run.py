@@ -202,7 +202,6 @@ def gst_move():
         g_disable = True
         # This puts him in the state where he's off to the side but will JS you in like 5 seconds or so. This       \/ is the countdown timer.
         gst_countdown = 100
-        gst.need = 99
     else:
         gst.counter += 1
         gst.loc = random.randint(0, 7)
@@ -224,7 +223,10 @@ def g_js():
         pygame.display.flip()
         time.sleep(.03)
         x += 1
-        
+    gjs = False
+    gst.need = random.randint(3, 15)
+    gst.loc = 4
+    gst.counter = 0
 
 def main():
     global inv
@@ -407,8 +409,8 @@ def main():
                 
         if gjs == True:
             g_js()
+            x = 0
             gjs = False
-            gst.countdown = -1
             gst.need = random.randint(10, 15)
             gst.timer = 0
             gst.loc = 5
