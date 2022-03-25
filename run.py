@@ -211,14 +211,14 @@ def gst_move():
 
 def g_js():
     global plane
-    global foodlure
-    global soundlure
+    global has_food
+    global has_sound
     global g_disable
     global x
     
     plane -= 10
-    foodlure = False
-    soundlure = False
+    has_food = False
+    has_sound = False
 
     while x != 20:
         chosenimg = pygame.image.load(gst.ghostjs[x])
@@ -272,7 +272,6 @@ def main():
         if gst_countdown == 0:
             gjs = True
             gst_countdown = -1
-            print(gst_countdown)
             
         if inv == True:
             cams()
