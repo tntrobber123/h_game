@@ -96,11 +96,11 @@ def draw_ent():
     screen.blit(progbar, (0, 460))
     
 def green_bar():
-    plane_int = int(plane)
-    screen.blit(greenbar, ((-490 + (plane_int * 5)), 460))
+    screen.blit(greenbar, ((-490 + (int(plane) * 5)), 460))
 
 def cams():
     global cam
+    
     if cam == 0:
         screen.blit(cam_0, (85, 120))
         if wlf.loc == 0:
@@ -200,7 +200,10 @@ def gst_move():
         inv = False
         gst.loc = 10
         g_disable = True
-        # This puts him in the state where he's off to the side but will JS you in like 5 seconds or so. This       \/ is the countdown timer.
+        gst.counter = 0
+        gst.need = random.randint(10, 15)
+        # This puts him in the state where he's off to the side but will JS you in like 5 seconds or so.
+        #This \/ is the countdown timer.
         gst_countdown = 100
     else:
         gst.counter += 1
@@ -210,6 +213,7 @@ def g_js():
     global plane
     global foodlure
     global soundlure
+    global g_disable
     global x
     
     plane -= 10
@@ -223,10 +227,21 @@ def g_js():
         pygame.display.flip()
         time.sleep(.03)
         x += 1
-    gjs = False
-    gst.need = random.randint(3, 15)
     gst.loc = 4
+    g_disable = False
+
+def g_reset():
+    global x
+    global g_disable
+    global gjs
+    
+    gst.loc = 4
+    g_disable = False
+    x = 0
+    gst.timer = 100
     gst.counter = 0
+    gst.need = random.randint(10, 15)
+    gjs = False
 
 def main():
     global inv
@@ -256,6 +271,8 @@ def main():
             gst_countdown -= 1
         if gst_countdown == 0:
             gjs = True
+            gst_countdown = -1
+            print(gst_countdown)
             
         if inv == True:
             cams()
@@ -398,22 +415,19 @@ def main():
         
         if cam == gst.loc:
             g_disable = True
+            gst.timer -= 5
         if cam != gst.loc:
             g_disable = False
             
-        if not g_disable:
+        if g_disable == False:
             gst.timer += 1
-            if gst.timer >= (10 // g_dif):
+            if gst.timer >= (50 // g_dif):
                 gst_move()
                 gst.timer = 0
                 
         if gjs == True:
             g_js()
-            x = 0
-            gjs = False
-            gst.need = random.randint(10, 15)
-            gst.timer = 0
-            gst.loc = 5
+            g_reset()
             
         pygame.display.flip()
 main()
