@@ -1,16 +1,16 @@
-# Ghost char
+# Scarecrow char
 
 import pygame
 import random
 
-class Ghost(pygame.sprite.Sprite):
+class Crow(pygame.sprite.Sprite):
     def __init__(self):
         self.loc = 4
         self.timer = 0
         self.counter = 0
         self.need = random.randint(3, 15)
-        self.img = pygame.image.load("sprites/chars/ghost.png")
-        self.ghostjs = (
+        self.img = pygame.image.load("sprites/chars/crow.png")
+        self.crowjs = (
 "sprites/chars/JS/0.png",
 "sprites/chars/JS/1.png",
 "sprites/chars/JS/2.png",
