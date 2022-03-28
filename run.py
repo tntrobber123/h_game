@@ -14,8 +14,6 @@ croc = Crocodile()
 from crow import Crow
 s = Crow()
 
-black = (0, 0, 0)
-white = (255, 255, 255)
 size = [1400, 1000]
 screen = pygame.display.set_mode(size)
 
@@ -32,6 +30,15 @@ cam_4 = pygame.image.load("backdrops/cams/cam_4.png")
 cam_5 = pygame.image.load("backdrops/cams/cam_5.png")
 cam_6 = pygame.image.load("backdrops/cams/cam_6.png")
 cam_7 = pygame.image.load("backdrops/cams/cam_7.png")
+
+nonv_0 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
+nonv_1 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
+nonv_2 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
+nonv_3 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
+nonv_4 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
+nonv_5 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
+nonv_6 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
+nonv_7 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
 
 # Sprites
 crshair = pygame.image.load("sprites/crosshair.png")
@@ -83,6 +90,8 @@ croc_countdown = -1
 s_disable = False
 s_countdown = -1
 
+nightvision = False
+
 def vision():
     screen.blit(testbkgrnd, ((-500 - (view * 10)), 0))
     screen.blit(foodimg, ((300 - (view * 10)), 500))
@@ -98,78 +107,155 @@ def green_bar():
 
 def cams():
     global cam
+    global nightvision
     
-    if cam == 0:
-        screen.blit(cam_0, (85, 120))
-        if wlf.loc == 0:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 0:
-            screen.blit(croc.img, (185, 120))
-        if s.loc == 0:
-            screen.blit(s.img, (400, 220))
+    if nightvision == False:
+    
+        if cam == 0:
+            screen.blit(nonv_0, (85, 120))
+            if wlf.loc == 0:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 0:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 0:
+                screen.blit(s.img, (400, 220))
             
-    if cam == 1:
-        screen.blit(cam_1, (85, 120))
-        if wlf.loc == 1:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 1:
-            screen.blit(croc.img, (185, 120))
-        if s.loc == 1:
-            screen.blit(s.img, (400, 220))
+        if cam == 1:
+            screen.blit(nonv_1, (85, 120))
+            if wlf.loc == 1:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 1:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 1:
+                screen.blit(s.img, (400, 220))
         
-    if cam == 2:
-        screen.blit(cam_2, (85, 120))
-        if wlf.loc == 2:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 2:
-            screen.blit(croc.img, (185, 120))
-        if s.loc == 2:
-            screen.blit(s.img, (400, 220))
+        if cam == 2:
+            screen.blit(nonv_2, (85, 120))
+            if wlf.loc == 2:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 2:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 2:
+                screen.blit(s.img, (400, 220))
         
-    if cam == 3:
-        screen.blit(cam_3, (85, 120))
-        if wlf.loc == 3:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 3:
-            screen.blit(croc.img, (185, 120))
-        if s.loc == 3:
-            screen.blit(s.img, (400, 220))
+        if cam == 3:
+            screen.blit(nonv_3, (85, 120))
+            if wlf.loc == 3:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 3:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 3:
+                screen.blit(s.img, (400, 220))
         
-    if cam == 4:
-        screen.blit(cam_4, (85, 120))
-        if wlf.loc == 4:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 4:
-            screen.blit(croc.img, (185, 120))
-        if s.loc == 4:
-            screen.blit(s.img, (400, 220))
+        if cam == 4:
+            screen.blit(nonv_4, (85, 120))
+            if wlf.loc == 4:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 4:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 4:
+                screen.blit(s.img, (400, 220))
         
-    if cam == 5:
-        screen.blit(cam_5, (85, 120))
-        if wlf.loc == 5:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 5:
-            screen.blit(croc.img, (400, 220))
-        if s.loc == 5:
-            screen.blit(s.img, (400, 220))
+        if cam == 5:
+            screen.blit(nonv_5, (85, 120))
+            if wlf.loc == 5:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 5:
+                screen.blit(croc.img, (400, 220))
+            if s.loc == 5:
+                screen.blit(s.img, (400, 220))
         
-    if cam == 6:
-        screen.blit(cam_6, (85, 120))
-        if wlf.loc == 6:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 6:
-            screen.blit(croc.img, (185, 120))
-        if s.loc == 6:
-            screen.blit(s.img, (400, 220))
+        if cam == 6:
+            screen.blit(nonv_6, (85, 120))
+            if wlf.loc == 6:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 6:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 6:
+                screen.blit(s.img, (400, 220))
         
-    if cam == 7:
-        screen.blit(cam_7, (85, 120))
-        if wlf.loc == 7:
-            screen.blit(wlf.img, (85, 120))
-        if croc.loc == 7:
-            screen.blit(croc.img, (185, 120))
-        if s.loc == 7:
-            screen.blit(s.img, (400, 220))
+        if cam == 7:
+            screen.blit(nonv_7, (85, 120))
+            if wlf.loc == 7:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 7:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 7:
+                screen.blit(s.img, (400, 220))
+                
+    if nightvision == True:
+        
+        if cam == 0:
+            screen.blit(cam_0, (85, 120))
+            if wlf.loc == 0:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 0:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 0:
+                screen.blit(s.img, (400, 220))
+            
+        if cam == 1:
+            screen.blit(cam_1, (85, 120))
+            if wlf.loc == 1:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 1:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 1:
+                screen.blit(s.img, (400, 220))
+        
+        if cam == 2:
+            screen.blit(cam_2, (85, 120))
+            if wlf.loc == 2:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 2:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 2:
+                screen.blit(s.img, (400, 220))
+        
+        if cam == 3:
+            screen.blit(cam_3, (85, 120))
+            if wlf.loc == 3:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 3:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 3:
+                screen.blit(s.img, (400, 220))
+        
+        if cam == 4:
+            screen.blit(cam_4, (85, 120))
+            if wlf.loc == 4:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 4:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 4:
+                screen.blit(s.img, (400, 220))
+        
+        if cam == 5:
+            screen.blit(cam_5, (85, 120))
+            if wlf.loc == 5:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 5:
+                screen.blit(croc.img, (400, 220))
+            if s.loc == 5:
+                screen.blit(s.img, (400, 220))
+        
+        if cam == 6:
+            screen.blit(cam_6, (85, 120))
+            if wlf.loc == 6:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 6:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 6:
+                screen.blit(s.img, (400, 220))
+        
+        if cam == 7:
+            screen.blit(cam_7, (85, 120))
+            if wlf.loc == 7:
+                screen.blit(wlf.img, (85, 120))
+            if croc.loc == 7:
+                screen.blit(croc.img, (185, 120))
+            if s.loc == 7:
+                screen.blit(s.img, (400, 220))
         
 def wlf_move(): 
     if food == False:
@@ -240,6 +326,7 @@ def s_reset():
     s.counter = 0
     s.need = random.randint(10, 15)
     sjs = False
+    screen.blit(inv_img, (0, 0))
 
 def main():
     global inv
@@ -260,6 +347,7 @@ def main():
     global sjs
     global croc_countdown
     global wlf_countdown
+    global nightvision
     
     # Event loop
         
@@ -288,6 +376,7 @@ def main():
                 tooluse = False
                 foodlure = False
                 soundlure = False
+                nightvision = False
                    
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -311,6 +400,8 @@ def main():
                     if inv == False:
                         inv = True
                         screen.blit(inv_img, (0, 0))
+                    if inv == True:
+                        nightvision = True
                         
                 if event.key == pygame.K_DOWN:
                     if inv == True:
@@ -322,12 +413,14 @@ def main():
                     if inv == True:
                         
                         if has_food == True:
-                            foodroom = cam
+                            wlf.loc = cam
+                            wlf.need += 7
                             has_food = False
                             screen.blit(inv_img, (0, 0))
                             
                         if has_sound == True:
-                            soundroom = cam
+                            croc.loc = cam
+                            croc.need += 7
                             has_sound = False
                             screen.blit(inv_img, (0, 0))
                             
