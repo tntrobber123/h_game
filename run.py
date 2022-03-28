@@ -91,6 +91,7 @@ s_disable = False
 s_countdown = -1
 
 nightvision = False
+battery = 10000
 
 def vision():
     screen.blit(testbkgrnd, ((-500 - (view * 10)), 0))
