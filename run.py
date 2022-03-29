@@ -16,7 +16,9 @@ s = Crow()
 
 size = [1400, 1000]
 screen = pygame.display.set_mode(size)
-
+pygame.init()
+white = (255, 255, 255)
+font = pygame.font.SysFont("Times New Roman", 25)
 # Sprites and Backgrounds
 testbkgrnd = pygame.image.load("backdrops/test_background.png")
 inv_img = pygame.image.load("backdrops/inv.png")
@@ -40,6 +42,8 @@ nonv_5 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
 nonv_6 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
 nonv_7 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
 
+overlay = pygame.image.load("backdrops/cams/camoverlay.png")
+
 # Sprites
 crshair = pygame.image.load("sprites/crosshair.png")
 crshair_using = pygame.image.load("sprites/crosshair_using.png")
@@ -62,7 +66,6 @@ has_sound = False
 soundroom = False
 
 screen.blit(testbkgrnd, (-500, 0))
-pygame.display.flip()
 
 view = 0
 move = 0
@@ -109,7 +112,9 @@ def green_bar():
 def cams():
     global cam
     global nightvision
+    global battery
     
+    dispbatt = font.render(str(round(battery / 100)), 1, white)
     if nightvision == False:
     
         if cam == 0:
@@ -185,6 +190,8 @@ def cams():
                 screen.blit(s.img, (400, 220))
                 
     if nightvision == True:
+
+        battery -= 1
         
         if cam == 0:
             screen.blit(cam_0, (85, 120))
@@ -257,7 +264,12 @@ def cams():
                 screen.blit(croc.img, (185, 120))
             if s.loc == 7:
                 screen.blit(s.img, (400, 220))
-        
+    
+    cam_n = font.render((str(cam)), 1, white)
+    screen.blit(overlay, (85, 449))
+    screen.blit(cam_n, (290, 500))
+    screen.blit(dispbatt, (280, 570))
+    
 def wlf_move(): 
     if food == False:
         if wlf.counter == wlf.need:
@@ -353,7 +365,7 @@ def main():
     # Event loop
         
     while True:
-            
+        
         if s_countdown > 0:
             s_countdown -= 1
         if s_countdown == 0:
@@ -415,13 +427,13 @@ def main():
                         
                         if has_food == True:
                             wlf.loc = cam
-                            wlf.need += 7
+                            wlf.need += random.randint(8, 14)
                             has_food = False
                             screen.blit(inv_img, (0, 0))
                             
                         if has_sound == True:
                             croc.loc = cam
-                            croc.need += 7
+                            croc.need += random.randint(8, 14)
                             has_sound = False
                             screen.blit(inv_img, (0, 0))
                             
