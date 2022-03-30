@@ -2,6 +2,7 @@ import pygame
 import time
 import random
 import math
+import vlc
 
 x = 0
 
@@ -54,6 +55,9 @@ soundimg = pygame.image.load("sprites/sound.png")
 minisound = pygame.image.load("sprites/minisound.png")
 progbar = pygame.image.load("sprites/progressbar.png")
 greenbar = pygame.image.load("sprites/greenbar.png")
+
+song = vlc.MediaPlayer("sound/song.mp3")
+scary = vlc.MediaPlayer("sound/js.mp3")
 
 food = False
 foodcount = 0
@@ -316,6 +320,8 @@ def s_js():
     plane -= 10
     has_food = False
     has_sound = False
+    
+    scary.play()
 
     while x != 20:
         chosenimg = pygame.image.load(s.crowjs[x])
@@ -341,6 +347,8 @@ def s_reset():
     sjs = False
     screen.blit(inv_img, (0, 0))
 
+#song.play()
+
 def main():
     global inv
     global cam
@@ -363,9 +371,11 @@ def main():
     global nightvision
     
     # Event loop
-        
+    
+    song.play()
+
     while True:
-        
+            
         if s_countdown > 0:
             s_countdown -= 1
         if s_countdown == 0:
