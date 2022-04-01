@@ -321,6 +321,7 @@ def s_js():
     has_food = False
     has_sound = False
     
+    scary.stop()
     scary.play()
 
     while x != 20:
@@ -341,7 +342,7 @@ def s_reset():
     s.loc = 4
     s_disable = False
     x = 0
-    s.timer = 100
+    s.timer = 900
     s.counter = 0
     s.need = random.randint(10, 15)
     sjs = False
