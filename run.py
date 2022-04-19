@@ -3,9 +3,7 @@ import time
 import random
 import math
 import vlc
-
 x = 0
-
 from wolf import Wolf
 wlf = Wolf()
 
@@ -15,15 +13,13 @@ croc = Crocodile()
 from crow import Crow
 s = Crow()
 
-size = [1400, 1000]
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode([1400, 1000])
 pygame.init()
 white = (255, 255, 255)
 font = pygame.font.SysFont("Times New Roman", 25)
 # Sprites and Backgrounds
 testbkgrnd = pygame.image.load("backdrops/test_background.png")
 inv_img = pygame.image.load("backdrops/inv.png")
-
 # Cameras
 cam_0 = pygame.image.load("backdrops/cams/cam_0.png")
 cam_1 = pygame.image.load("backdrops/cams/cam_1.png")
@@ -34,17 +30,20 @@ cam_5 = pygame.image.load("backdrops/cams/cam_5.png")
 cam_6 = pygame.image.load("backdrops/cams/cam_6.png")
 cam_7 = pygame.image.load("backdrops/cams/cam_7.png")
 
+eyesnv = pygame.image.load("backdrops/cams/wlf/eyesnv.png")
+eyesnonv = pygame.image.load("backdrops/cams/wlf/eyesnonv.png")
+tail = pygame.image.load("backdrops/cams/wlf/tail.png")
+
 nonv_0 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
 nonv_1 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
 nonv_2 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
 nonv_3 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
 nonv_4 = pygame.image.load("backdrops/cams/nonv/nonv_1.png")
-nonv_5 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
+nonv_5 = pygame.image.load("backdrops/cams/nonv/nonv_5.png")
 nonv_6 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
 nonv_7 = pygame.image.load("backdrops/cams/nonv/nonv_3.png")
 
 overlay = pygame.image.load("backdrops/cams/camoverlay.png")
-
 # Sprites
 crshair = pygame.image.load("sprites/crosshair.png")
 crshair_using = pygame.image.load("sprites/crosshair_using.png")
@@ -63,7 +62,6 @@ food = False
 foodcount = 0
 has_food = False
 foodroom = False
-
 sound = False
 soundcount = 0
 has_sound = False
@@ -74,22 +72,14 @@ screen.blit(testbkgrnd, (-500, 0))
 view = 0
 move = 0
 cam = 0
-
 tooluse = False
 foodlure = False
 soundlure = False
-
 plane = 0
 inv = False
-
 night = 1
-
-w_dif = 1
-c_dif = 1
-s_dif = 1
-
+difficulty = 1
 sjs = False
-
 w_disable = False
 wlf_countdown = -1
 c_disable = False
@@ -105,18 +95,11 @@ def vision():
     screen.blit(foodimg, ((300 - (view * 10)), 500))
     screen.blit(planefix, ((600 - (view * 10)), 500))
     screen.blit(soundimg, ((900 - (view * 10)), 500))
-
-def draw_ent():
     screen.blit(crshair, (650, 500))
-    screen.blit(progbar, (0, 460))
-    
-def green_bar():
     screen.blit(greenbar, ((-490 + (int(plane) * 5)), 460))
+    screen.blit(progbar, (0, 460))
 
-def cams():
-    global cam
-    global nightvision
-    global battery
+def cams(cam, nightvision, battery):
     
     dispbatt = font.render(str(round(battery / 100)), 1, white)
     if nightvision == False:
@@ -150,8 +133,11 @@ def cams():
         
         if cam == 3:
             screen.blit(nonv_3, (85, 120))
-            if wlf.loc == 3:
+            if wlf.stage == 3:
                 screen.blit(wlf.img, (85, 120))
+            if wlf.stage == 2:
+                screen.blit(eyesnonv, (85, 120))
+                # If wolf stage is 1 you cant see it without NV
             if croc.loc == 3:
                 screen.blit(croc.img, (185, 120))
             if s.loc == 3:
@@ -203,8 +189,6 @@ def cams():
                 screen.blit(wlf.img, (85, 120))
             if croc.loc == 0:
                 screen.blit(croc.img, (185, 120))
-            if s.loc == 0:
-                screen.blit(s.img, (400, 220))
             
         if cam == 1:
             screen.blit(cam_1, (85, 120))
@@ -212,8 +196,6 @@ def cams():
                 screen.blit(wlf.img, (85, 120))
             if croc.loc == 1:
                 screen.blit(croc.img, (185, 120))
-            if s.loc == 1:
-                screen.blit(s.img, (400, 220))
         
         if cam == 2:
             screen.blit(cam_2, (85, 120))
@@ -221,17 +203,17 @@ def cams():
                 screen.blit(wlf.img, (85, 120))
             if croc.loc == 2:
                 screen.blit(croc.img, (185, 120))
-            if s.loc == 2:
-                screen.blit(s.img, (400, 220))
         
         if cam == 3:
             screen.blit(cam_3, (85, 120))
-            if wlf.loc == 3:
+            if wlf.stage == 3:
                 screen.blit(wlf.img, (85, 120))
+            if wlf.stage == 2:
+                screen.blit(eyesnv, (85, 120))
+            if wlf.stage == 1:
+                screen.blit(tail, (85, 120))
             if croc.loc == 3:
                 screen.blit(croc.img, (185, 120))
-            if s.loc == 3:
-                screen.blit(s.img, (400, 220))
         
         if cam == 4:
             screen.blit(cam_4, (85, 120))
@@ -239,8 +221,6 @@ def cams():
                 screen.blit(wlf.img, (85, 120))
             if croc.loc == 4:
                 screen.blit(croc.img, (185, 120))
-            if s.loc == 4:
-                screen.blit(s.img, (400, 220))
         
         if cam == 5:
             screen.blit(cam_5, (85, 120))
@@ -248,8 +228,6 @@ def cams():
                 screen.blit(wlf.img, (85, 120))
             if croc.loc == 5:
                 screen.blit(croc.img, (400, 220))
-            if s.loc == 5:
-                screen.blit(s.img, (400, 220))
         
         if cam == 6:
             screen.blit(cam_6, (85, 120))
@@ -257,8 +235,6 @@ def cams():
                 screen.blit(wlf.img, (85, 120))
             if croc.loc == 6:
                 screen.blit(croc.img, (185, 120))
-            if s.loc == 6:
-                screen.blit(s.img, (400, 220))
         
         if cam == 7:
             screen.blit(cam_7, (85, 120))
@@ -266,8 +242,6 @@ def cams():
                 screen.blit(wlf.img, (85, 120))
             if croc.loc == 7:
                 screen.blit(croc.img, (185, 120))
-            if s.loc == 7:
-                screen.blit(s.img, (400, 220))
     
     cam_n = font.render((str(cam)), 1, white)
     screen.blit(overlay, (85, 449))
@@ -277,11 +251,24 @@ def cams():
 def wlf_move(): 
     if food == False:
         if wlf.counter == wlf.need:
-            # Jumpscare
-            pass
+            wlf.stage += 1
+            wlf.loc = 3
+            wlf.counter = 0
+            wlf.need = random.randint(3, 5)
+            if wlf.stage == 4:
+                wlf_js()
+                wlf.stage = 0
         else:
             wlf.counter += 1
             wlf.loc = random.randint(0, 7)
+
+def wlf_js():
+    scary.play()
+    # Jumpscare animation
+    # screen.blit(gameover, (0, 0))
+    print("loser")
+    pygame.quit()
+    quit()
             
 def croc_move():
     if sound == False:
@@ -292,10 +279,7 @@ def croc_move():
             croc.counter += 1
             croc.loc = random.randint(0, 7)
             
-def s_move():
-    global inv
-    global s_disable
-    global s_countdown
+def s_move(inv, s_disable, s_countdown):
     
     if s.counter == s.need:
         inv = False
@@ -310,19 +294,17 @@ def s_move():
         s.counter += 1
         s.loc = random.randint(0, 7)
 
-def s_js():
-    global plane
-    global has_food
-    global has_sound
-    global s_disable
-    global x
+def s_js(plane, has_food, has_sound, s_disable, x, difficulty):
     
-    plane -= 10
+    plane -= 10 * difficulty
     has_food = False
     has_sound = False
     
     scary.stop()
     scary.play()
+    print("e")
+    pygame.quit()
+    quit()
 
     while x != 20:
         chosenimg = pygame.image.load(s.crowjs[x])
@@ -334,11 +316,7 @@ def s_js():
     s.loc = 4
     s_disable = False
 
-def s_reset():
-    global x
-    global s_disable
-    global sjs
-    
+def s_reset(x, s_disable, sjs):
     s.loc = 4
     s_disable = False
     x = 0
@@ -350,29 +328,11 @@ def s_reset():
 
 #song.play()
 
-def main():
-    global inv
-    global cam
+def main(inv, cam, tooluse, foodlure, foodcount, foodroom, soundlure, soundcount, soundroom, has_food, has_sound, s_countdown, sjs, croc_countdown, wlf_countdown, nightvision, difficulty, night):
     global move
     global view
-    global tooluse
     global plane
-    global foodlure
-    global foodcount
-    global foodroom
-    global soundlure
-    global soundcount
-    global soundroom
-    global has_food
-    global has_sound
-    global s_countdown
-    global sjs
-    global croc_countdown
-    global wlf_countdown
-    global nightvision
-    
     # Event loop
-    
     song.play()
 
     while True:
@@ -384,12 +344,10 @@ def main():
             s_countdown = -1
             
         if inv == True:
-            cams()
+            cams(cam, nightvision, battery)
             
         if inv == False:
             vision()
-            green_bar()
-            draw_ent()
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -439,6 +397,7 @@ def main():
                         if has_food == True:
                             wlf.loc = cam
                             wlf.need += random.randint(8, 14)
+                            wlf.stage = 0
                             has_food = False
                             screen.blit(inv_img, (0, 0))
                             
@@ -485,11 +444,27 @@ def main():
             cam = 7
         
         if tooluse == True:
-            plane += .2
+            plane += .2 / difficulty
         if plane >= 100:
-            # Advance the level
-            pygame.quit()
-            quit()
+            night += 1
+            plane = 0
+            has_food = False
+            has_sound = False
+            croc.need = random.randint(7, 13)
+            croc.counter = 0
+            s.need = random.randint(7, 13)
+            s.counter = 0
+            wlf.need = random.randint(7, 13)
+            wlf.counter = 0
+            #Screen.blit(next_night, (0, 0))
+            time.sleep(3)
+            difficulty += (night / 10) +3
+            if night == 7:
+                print("you win!")
+                #Screen.blit(win, (0, 0))
+                time.sleep(3)
+                pygame.quit()
+                quit()
             
         if foodlure == True:
             foodcount += 1
@@ -517,31 +492,31 @@ def main():
         
         if not w_disable:
             wlf.timer += 1
-            if wlf.timer >= (500 // w_dif):
+            if wlf.timer >= (500 // difficulty):
                 wlf_move()
                 wlf.timer = 0
             
         if not c_disable:
             croc.timer += 1
-            if croc.timer >= (800 // c_dif):
+            if croc.timer >= (800 // difficulty):
                 croc_move()
                 croc.timer = 0
         
         if cam == s.loc:
             s_disable = True
-            s.timer -= 5
+            s.timer -= 1
         if cam != s.loc:
             s_disable = False
             
         if s_disable == False:
             s.timer += 1
-            if s.timer >= (50 // s_dif):
-                s_move()
+            if s.timer >= (50 // difficulty):
+                s_move(inv, s_disable, s_countdown)
                 s.timer = 0
                 
         if sjs == True:
-            s_js()
-            s_reset()
+            s_js(plane, has_food, has_sound, s_disable, x)
+            s_reset(x, s_disable, sjs)
             
         pygame.display.flip()
-main()
+main(inv, cam, tooluse, foodlure, foodcount, foodroom, soundlure, soundcount, soundroom, has_food, has_sound, s_countdown, sjs, croc_countdown, wlf_countdown, nightvision, difficulty, night)

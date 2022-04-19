@@ -8,7 +8,7 @@ class Crow(pygame.sprite.Sprite):
         self.loc = 4
         self.timer = 0
         self.counter = 0
-        self.need = random.randint(3, 15)
+        self.need = random.randint(1, 2)
         self.img = pygame.image.load("sprites/chars/crow.png")
         self.crowjs = (
 "sprites/chars/JS/0.png",

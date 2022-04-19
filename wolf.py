@@ -22,4 +22,5 @@ class Wolf(pygame.sprite.Sprite):
         self.timer = 0
         self.counter = 0
         self.need = random.randint(3, 10)
+        self.stage = 0
         self.img = pygame.image.load("sprites/chars/croc.png")
